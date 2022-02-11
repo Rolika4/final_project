@@ -60,7 +60,17 @@ resource "aws_security_group" "Allow_ssh" {
     Name = "allow_ssh"
   }
 }
+resource "local_file" "ip_output" {
+  content = <<-DOC
+  [test_servers]
+  test_server1 ansible_host=${aws_instance.My_first_server.public_ip}
+  DOC
+  filename = "./inventory.txt"
 
+  provisioner "local-exec" {
+  command = "ansible-playbook --private-key '${var.key}' playbook.yml"
+  }
+}
 
 
 output "Public_IP" {
