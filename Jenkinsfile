@@ -4,7 +4,7 @@ pipeline {
         stage('Test') {
             steps {
             echo "Testing"
-            sh 'mkdir papka'
+            sh 'mkdir project'
             }
         }
         stage('Deploy') {
