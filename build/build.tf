@@ -62,7 +62,7 @@ resource "aws_security_group" "Allow_ssh" {
 }
 resource "local_file" "ip_output" {
   content = <<-DOC
-  [test_servers]
+  [build_servers]
   test_server1 ansible_host=${aws_instance.My_first_server.public_ip}
   DOC
   filename = "./inventory.txt"
