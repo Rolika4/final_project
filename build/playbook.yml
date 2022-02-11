@@ -2,8 +2,35 @@
 - name: Configure build server, build .jar, create container, push container
   hosts: all
   become: yes
+  vars:
+    user: ubuntu
+    group: ubuntu
 
   tasks:
-  - name: Create file with variable
-    shell: |
-      touch my_first_file
+  - name: Apt upgrade
+    apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+  - name: Install packages (Java 11, Maven, Docker.io, NPM)
+    apt:
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+        - openjdk-11-jdk
+        - maven
+        - docker.io
+        - npm
+        - make
+  - name: Copy shell script
+    copy:
+      src: ./build.sh
+      dest: /home/ubuntu/
+      owner: "{{ user }}"
+      group: "{{ group }}"
+      mode: '0777'
+  - name: Copy docker file
+    copy:
+      src: ../docker/
+      dest: /home/ubuntu/git/
+      owner: "{{ user }}"
+      group: "{{ group }}"
+      mode: '0644'
