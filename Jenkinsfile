@@ -12,7 +12,7 @@ pipeline {
             echo "My key is '$AWS_ACCESS_KEY' "
             git branch: 'main', url: 'git@github.com:Rolika4/Real_World.git', credentialsId: 'github_key'
             sh 'mkdir project'
-            sh 'cp . project/'
+            sh 'cp -R . project/'
             sh 'sudo rm -r *'
 
             }
