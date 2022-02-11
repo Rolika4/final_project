@@ -35,17 +35,6 @@ resource "aws_instance" "My_first_server" {
       host        = "${self.public_dns}"
     }
   }
-provisioner "file" {
-    source      = "../realworld-backend-spring-ddd"
-    destination = "/home/ubuntu/"
-
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = "${file("${var.key}")}"
-      host        = "${self.public_dns}"
-    }
-  }
 }
 
 #Add resource group 
