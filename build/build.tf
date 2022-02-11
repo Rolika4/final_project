@@ -25,7 +25,18 @@ resource "aws_instance" "My_first_server" {
   key_name = "AWS"
   vpc_security_group_ids = [aws_security_group.Allow_ssh.id]
   provisioner "file" {
-    source      = "../build"
+    source      = "../Client"
+    destination = "/home/ubuntu/"
+
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = "${file("${var.key}")}"
+      host        = "${self.public_dns}"
+    }
+  }
+provisioner "file" {
+    source      = "../realworld-backend-spring-ddd"
     destination = "/home/ubuntu/"
 
     connection {
