@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-            echo "Testing"   
+            echo "Testing"
+            sh 'mkdir papka'
             }
         }
         stage('Deploy') {
