@@ -9,11 +9,13 @@ pipeline {
             }
             steps {
             echo "Testing"
-            echo "My key is '$AWS_ACCESS_KEY' "
-            git branch: 'main', url: 'git@github.com:Rolika4/Real_World.git', credentialsId: 'github_key'
+            echo "My key is '$AWS_ACCESS_KEY' "    
             sh 'mkdir project'
-            sh 'cp -R . project/'
-            sh 'sudo rm -r *'
+            dir('project') {
+            git branch: 'main', url: 'git@github.com:Rolika4/Real_World.git', credentialsId: 'github_key'
+      } 
+            sh 'terraform -chdir=build init'
+            sh 'terraform -chdir=build apply -auto-approve -var="key=$AWS_KEY" -var="accesskey=$AWS_ACCESS_KEY" -var="secretkey=$AWS_SECRET_KEY"'
 
             }
         }
