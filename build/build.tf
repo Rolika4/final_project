@@ -25,7 +25,7 @@ resource "aws_instance" "My_first_server" {
   key_name = "AWS"
   vpc_security_group_ids = [aws_security_group.Allow_ssh.id]
   provisioner "file" {
-    source      = "../Client"
+    source      = "../project/"
     destination = "/home/ubuntu/"
 
     connection {
