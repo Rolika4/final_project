@@ -12,3 +12,6 @@ npm run build
 cp -R /home/ubuntu/Client/build /home/ubuntu/git/React/
 cd /home/ubuntu/git/React
 sudo docker build -t rolliku/frontend .
+sudo docker login -u $1 -p $2
+sudo docker push rolliku/frontend:latest
+sudo docker push rolliku/backend:latest
