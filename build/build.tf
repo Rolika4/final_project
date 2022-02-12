@@ -68,7 +68,7 @@ resource "local_file" "ip_output" {
   filename = "./inventory.txt"
 
   provisioner "local-exec" {
-  command = "ansible-playbook --private-key '${var.key}' playbook.yml"
+  command = "ansible-playbook --private-key '${var.key}' playbook.yml --extra-var 'login=${var.DockerLogin} psw=${DockerPsw}'"
   }
 }
 
