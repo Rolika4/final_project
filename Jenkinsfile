@@ -17,7 +17,8 @@ pipeline {
       } 
             sh 'terraform -chdir=build init'
             sh 'terraform -chdir=build apply -auto-approve -var="key=$AWS_KEY" -var="accesskey=$AWS_ACCESS_KEY" -var="secretkey=$AWS_SECRET_KEY" -var="DockerLogin=$DOCKER_USR" -var="DockerPsw=$DOCKER_PSW"'
-            cleanWs()
+            sh 'terraform -chdir=build destroy -auto-approve -var="accesskey=$AWS_ACCESS_KEY" -var="secretkey=$AWS_SECRET_KEY" '
+                cleanWs()
             }
         }
         stage('Test') {
