@@ -7,6 +7,12 @@ variable "accesskey" {
 variable "secretkey" {
   default = {}
 }
+variable "DockerLogin" {
+  default = {}
+}
+variable "DockerPsw" {
+  default = {}
+}
 #Provide
 provider "aws" {
     region = "us-east-2"
