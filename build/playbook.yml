@@ -34,5 +34,4 @@
       owner: "{{ user }}"
       group: "{{ group }}"
       mode: '0644'
-  - name: Run shell command
-    shell: /home/ubuntu/build.sh "{{login}}" "{{psw}}"
+
