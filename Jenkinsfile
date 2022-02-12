@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Test') {
+        stage('Build') {
             environment {
             AWS_ACCESS_KEY     = credentials('accesskey')
             AWS_SECRET_KEY = credentials('secretkey')
@@ -19,7 +19,7 @@ pipeline {
 
             }
         }
-        stage('Deploy') {
+        stage('Test') {
             steps {
             sh "ls -l "   
             }
