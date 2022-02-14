@@ -27,7 +27,7 @@ pipeline {
                 expression { params.REQUESTED_ACTION == 'Destroy' }
             }
             steps {
-                sh 'terraform -chdir=init_prod destroy -auto-approve -var="access_key=$AWS_ACCESS_KEY" -var="secret_key=$AWS_SECRET_KEY" '
+                sh 'terraform -chdir=init_prod destroy -auto-approve -var="accesskey=$AWS_ACCESS_KEY" -var="secretkey=$AWS_SECRET_KEY" '
             }
         }
     }
