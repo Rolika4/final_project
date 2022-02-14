@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    environment {
+            AWS_ACCESS_KEY = credentials('accesskey')
+            AWS_SECRET_KEY = credentials('secretkey')
+            AWS_KEY = credentials('aws')
+            DOCKER = credentials('Docker')
+            }
+    parameters {
+        choice(
+            choices: ['Init' , 'Destroy'],
+            description: '',
+            name: 'REQUESTED_ACTION')
+    }
+    stages {
+        stage ('Init') {
+            when {
+                expression { params.REQUESTED_ACTION == 'Init' }
+            }
+            steps {
+                sh 'terraform -chdir=init_prod init'
+                sh 'terraform -chdir=init_prod apply -auto-approve -var="aws_key=$AWS_KEY" -var="access_key=$AWS_ACCESS_KEY" -var="secret_key=$AWS_SECRET_KEY" -var="dockerlogin=$DOCKER_USR" -var="dockerpsw=$DOCKER_PSW"'
+            }
+        }
+        stage ('Destroy') {
+            when {
+                expression { params.REQUESTED_ACTION == 'Destroy' }
+            }
+            steps {
+                sh 'terraform -chdir=init_prod destroy -auto-approve -var="access_key=$AWS_ACCESS_KEY" -var="secret_key=$AWS_SECRET_KEY" '
+            }
+        }
+    }
+}

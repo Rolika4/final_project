@@ -1,0 +1,16 @@
+---
+- name: Restart java app
+  hosts: java_server
+  become: yes
+
+  tasks:
+  - name: Java
+    shell: /home/ubuntu/reload.sh java
+    
+- name: Restart react app
+  hosts: react_server
+  become: yes
+
+  tasks:
+  - name: React 
+    shell: /home/ubuntu/reload.sh react

@@ -1,0 +1,43 @@
+---
+- name: Install package and scripts
+  hosts: all
+  become: yes
+  vars:
+    user: ubuntu
+    group: ubuntu
+
+  tasks:
+  - name: Apt upgrade
+    apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+  - name: Install docker.io
+    apt:
+      name: docker.io
+      state: present
+  - name: Copy init script
+    copy:
+      src: ./init.sh
+      dest: /home/ubuntu/
+      owner: "{{ user }}"
+      group: "{{ group }}"
+      mode: '0766'
+  - name: Copy reload script
+    copy:
+      src: ./reload.sh
+      dest: /home/ubuntu/
+      owner: "{{ user }}"
+      group: "{{ group }}"
+      mode: '0766'
+
+- name: Update server
+  hosts: java_server
+  become: yes
+  tasks:
+  - name: Run deploy script on java server
+    shell: /home/ubuntu/init.sh "{{login}}" "{{psw}}" java
+
+- name: Update server
+  hosts: react_server
+  become: yes
+  tasks:
+  - name: Run deploy script on react server
+    shell: /home/ubuntu/init.sh "{{login}}" "{{psw}}" react
