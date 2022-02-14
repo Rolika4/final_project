@@ -26,7 +26,7 @@ data "aws_eip" "java" {
 }
 data "aws_eip" "react" {
   tags = {
-    "Name" = "JavaEIP"
+    "Name" = "ReactEIP"
   }
 }
 
