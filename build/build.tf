@@ -45,7 +45,7 @@ resource "aws_instance" "My_first_server" {
 
 #Add resource group 
 resource "aws_security_group" "Allow_ssh_acc" {
-  name        = "Allow_ssh"
+  name        = "Allow_ssh_access"
   description = "Allow SSH inbound traffic"
 
   ingress {
