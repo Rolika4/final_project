@@ -9,32 +9,32 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-            sh "----------------------------------------------TEST----------------------------------------------"
+            echo "----------------------------------------------TEST----------------------------------------------"
             sh 'mkdir project'
             dir('project') {
             git branch: 'main', url: 'git@github.com:Rolika4/Real_World.git', credentialsId: 'github_key'
             } 
             sh 'sleep 5'
-            sh "----------------------------------------------PASS----------------------------------------------"   
+            echo "----------------------------------------------PASS----------------------------------------------"   
             }
         }
         stage('Build') {
             steps {
-            sh "----------------------------------------------BUILD----------------------------------------------"  
+            echo "----------------------------------------------BUILD----------------------------------------------"  
             sh 'terraform -chdir=build init'
             sh 'terraform -chdir=build apply -auto-approve -var="key=$AWS_KEY" -var="accesskey=$AWS_ACCESS_KEY" -var="secretkey=$AWS_SECRET_KEY" -var="DockerLogin=$DOCKER_USR" -var="DockerPsw=$DOCKER_PSW"'
             sh 'terraform -chdir=build destroy -auto-approve -var="accesskey=$AWS_ACCESS_KEY" -var="secretkey=$AWS_SECRET_KEY" '
-            sh "----------------------------------------------PASS-----------------------------------------------"
+            echo "----------------------------------------------PASS-----------------------------------------------"
             
             }
         }
         stage('Deployy') {
             steps {
-            sh "----------------------------------------------DEPLOY----------------------------------------------" 
+            echo "----------------------------------------------DEPLOY----------------------------------------------" 
             sh 'terraform -chdir=deploy init'
             sh 'terraform -chdir=deploy apply -auto-approve -var="key=$AWS_KEY" -var="accesskey=$AWS_ACCESS_KEY" -var="secretkey=$AWS_SECRET_KEY" -var="DockerLogin=$DOCKER_USR" -var="DockerPsw=$DOCKER_PSW"'
             sh 'terraform -chdir=deploy destroy -auto-approve -var="accesskey=$AWS_ACCESS_KEY" -var="secretkey=$AWS_SECRET_KEY" '  
-            sh "----------------------------------------------PASS------------------------------------------------"
+            echo "----------------------------------------------PASS------------------------------------------------"
             cleanWs()
             }
         }
