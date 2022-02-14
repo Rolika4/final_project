@@ -135,6 +135,6 @@ resource "local_file" "ip_output" {
       type        = "ssh"
       user        = "ubuntu"
       private_key = "AWS"
-      host        = "${aws_eip_association.java_static_ip.public_ip}, ${aws_eip.react_static_ip.public_ip}"
+      host        = "${aws_eip_association.java_static_ip.public_ip}"
     }
 }
