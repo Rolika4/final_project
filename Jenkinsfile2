@@ -19,7 +19,7 @@ pipeline {
             }
             steps {
                 sh 'terraform -chdir=init_prod init'
-                sh 'terraform -chdir=init_prod apply -auto-approve -var="aws_key=$AWS_KEY" -var="access_key=$AWS_ACCESS_KEY" -var="secret_key=$AWS_SECRET_KEY" -var="dockerlogin=$DOCKER_USR" -var="dockerpsw=$DOCKER_PSW"'
+                sh 'terraform -chdir=init_prod apply -auto-approve -var="key=$AWS_KEY" -var="accesskey=$AWS_ACCESS_KEY" -var="secretkey=$AWS_SECRET_KEY" -var="DockerLogin=$DOCKER_USR" -var="DockerPsw=$DOCKER_PSW"'
             }
         }
         stage ('Destroy') {
