@@ -29,7 +29,7 @@ resource "aws_instance" "My_first_server" {
   ami = "ami-0fb653ca2d3203ac1"
   instance_type = "t2.xlarge"
   key_name = "AWS"
-  vpc_security_group_ids = [aws_security_group.Allow_ssh.id]
+  vpc_security_group_ids = [aws_security_group.Allow_ssh_acc.id]
   provisioner "file" {
     source      = "../project/"
     destination = "/home/ubuntu/"
@@ -44,7 +44,7 @@ resource "aws_instance" "My_first_server" {
 }
 
 #Add resource group 
-resource "aws_security_group" "Allow_ssh" {
+resource "aws_security_group" "Allow_ssh_acc" {
   name        = "Allow_ssh"
   description = "Allow SSH inbound traffic"
 
@@ -76,10 +76,5 @@ resource "local_file" "ip_output" {
   provisioner "local-exec" {
   command = "ansible-playbook --private-key '${var.key}' playbook.yml --extra-var \"login=${var.DockerLogin} psw=${var.DockerPsw}\" "
   }
-}
-
-
-output "Public_IP" {
-  value = "${aws_instance.My_first_server.public_ip}"
 }
 
